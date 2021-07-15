@@ -3,6 +3,8 @@ package springproject.hrms.business.concretes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springproject.hrms.business.abstracts.StaffService;
+import springproject.hrms.core.utilities.results.DataResult;
+import springproject.hrms.core.utilities.results.SuccessDataResult;
 import springproject.hrms.dataAccess.abstracts.StaffDao;
 import springproject.hrms.entities.concretes.Staff;
 
@@ -19,7 +21,7 @@ public class StaffManager implements StaffService {
     }
 
     @Override
-    public List<Staff> getAll() {
-        return null;
+    public DataResult<List<Staff>> getAll() {
+        return new SuccessDataResult<List<Staff>>(this.staffDao.findAll());
     }
 }
