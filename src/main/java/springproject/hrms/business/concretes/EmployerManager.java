@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springproject.hrms.business.abstracts.EmployerService;
 import springproject.hrms.core.utilities.results.DataResult;
+import springproject.hrms.core.utilities.results.Result;
 import springproject.hrms.core.utilities.results.SuccessDataResult;
+import springproject.hrms.core.utilities.results.SuccessResult;
 import springproject.hrms.dataAccess.abstracts.EmployerDao;
 import springproject.hrms.entities.concretes.Employer;
 
@@ -22,6 +24,14 @@ public class EmployerManager implements EmployerService {
 
     @Override
     public DataResult<List<Employer>> getAll() {
-        return new SuccessDataResult<List<Employer>>(this.employerDao.findAll());
+        return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), "Employers listed");
     }
+
+
+    @Override
+    public Result add(Employer employer) {
+        this.employerDao.save(employer);
+        return new SuccessResult("Employer added");
+    }
+
 }

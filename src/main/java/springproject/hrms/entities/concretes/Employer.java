@@ -11,15 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name="employers")
-public class Employer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
-
-    @Column(name="user_id")
-    private int userId;
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName="id")
+public class Employer extends User{
 
     @Column(name="company_name")
     private String companyName;
@@ -29,4 +22,11 @@ public class Employer {
 
     @Column(name="phone")
     private String phone;
+
+    public Employer(String email, String password, String companyName, String website, String phone) {
+        super(email, password);
+        this.companyName = companyName;
+        this.website = website;
+        this.phone = phone;
+    }
 }

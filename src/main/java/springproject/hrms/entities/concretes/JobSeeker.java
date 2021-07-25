@@ -12,15 +12,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name="job_seekers")
-public class JobSeeker {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
-
-    @Column(name="user_id")
-    private int userId;
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName="id")
+public class JobSeeker extends User{
 
     @Column(name="first_name")
     private String firstName;
@@ -33,4 +26,12 @@ public class JobSeeker {
 
     @Column(name="nationality_id")
     private String nationalityId;
+
+    public JobSeeker(String email, String password, String firstName, String lastName, Date birthDate, String nationalityId) {
+        super(email, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.nationalityId = nationalityId;
+    }
 }

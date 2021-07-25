@@ -11,12 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/job_positions")
-public class JobPositionController {
+public class JobPositionsController {
 
     private JobPositionService jobPositionService;
 
     @Autowired
-    public JobPositionController(JobPositionService jobPositionService) {
+    public JobPositionsController(JobPositionService jobPositionService) {
         this.jobPositionService = jobPositionService;
     }
 
