@@ -24,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/job_seeker_register")
-    public Result jobSeekerRegister(@RequestBody JobSeeker jobSeeker, @RequestParam String passwordRepeat){
+    public Result jobSeekerRegister(@RequestBody JobSeeker jobSeeker, @RequestParam String passwordRepeat) throws Exception {
         return this.authService.jobSeekerRegister(jobSeeker, passwordRepeat);
     }
 }

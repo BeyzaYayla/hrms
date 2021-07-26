@@ -6,7 +6,9 @@ import springproject.hrms.business.abstracts.AuthService;
 import springproject.hrms.business.abstracts.EmployerService;
 import springproject.hrms.business.abstracts.JobSeekerService;
 import springproject.hrms.business.abstracts.UserService;
+import springproject.hrms.core.utilities.Verification.EmailVerification.EmailVerificationService;
 import springproject.hrms.core.utilities.business.BusinessRules;
+import springproject.hrms.core.utilities.Verification.nationalityIdVerification.NationalityIdVerificationService;
 import springproject.hrms.core.utilities.results.ErrorResult;
 import springproject.hrms.core.utilities.results.Result;
 import springproject.hrms.core.utilities.results.SuccessResult;
@@ -19,12 +21,16 @@ public class AuthManager implements AuthService {
     private UserService userService;
     private EmployerService employerService;
     private JobSeekerService jobSeekerService;
+    private NationalityIdVerificationService idVerificationService;
+    private EmailVerificationService emailVerificationService;
 
     @Autowired
-    public AuthManager(UserService userService, EmployerService employerService, JobSeekerService jobSeekerService) {
+    public AuthManager(UserService userService, EmployerService employerService, JobSeekerService jobSeekerService, NationalityIdVerificationService verificationService, EmailVerificationService emailVerificationService) {
         this.userService = userService;
         this.employerService = employerService;
         this.jobSeekerService = jobSeekerService;
+        this.idVerificationService = verificationService;
+        this.emailVerificationService = emailVerificationService;
     }
 
     @Override
@@ -33,6 +39,7 @@ public class AuthManager implements AuthService {
         Result result = BusinessRules.Run(nullControlForEmployer(employer),
                 checkEmailDomain(employer.getEmail(),employer.getWebsite()),
                 emailExists(employer.getEmail()),
+                emailVerification(employer.getEmail()),
                 checkPassword(employer.getPassword(),passwordRepeat));
 
         if (result != null){
@@ -44,11 +51,13 @@ public class AuthManager implements AuthService {
     }
 
     @Override
-    public Result jobSeekerRegister(JobSeeker jobSeeker, String passwordRepeat) {
+    public Result jobSeekerRegister(JobSeeker jobSeeker, String passwordRepeat) throws Exception {
 
         Result result = BusinessRules.Run(nullControlForJobSeeker(jobSeeker),
                 emailExists(jobSeeker.getEmail()),
                 userExists(jobSeeker.getNationalityId()),
+                mernisVerification(jobSeeker),
+                emailVerification(jobSeeker.getEmail()),
                 checkPassword(jobSeeker.getPassword(),passwordRepeat));
 
         if (result != null){
@@ -78,7 +87,7 @@ public class AuthManager implements AuthService {
         return new SuccessResult();
     }
 
-    private Result userExists(String nationalityId){
+    private Result userExists(long nationalityId){
         var user = this.jobSeekerService.getByNationalityId(nationalityId);
 
         if (user.getData() != null){
@@ -86,6 +95,14 @@ public class AuthManager implements AuthService {
         }
 
         return new SuccessResult();
+    }
+
+    private Result mernisVerification(JobSeeker jobSeeker) throws Exception {
+        return idVerificationService.verify(jobSeeker);
+    }
+
+    private Result emailVerification(String email) {
+        return emailVerificationService.verifyEmail(email);
     }
 
     private Result checkPassword(String password, String passwordRepeat){
@@ -108,7 +125,7 @@ public class AuthManager implements AuthService {
     private Result nullControlForJobSeeker(JobSeeker jobSeeker){
 
         if (jobSeeker.getEmail().isBlank() && jobSeeker.getFirstName().isBlank() && jobSeeker.getLastName().isBlank() &&
-                jobSeeker.getNationalityId().isBlank() && jobSeeker.getBirthDate() == null &&
+                jobSeeker.getNationalityId() == 0 && jobSeeker.getBirthYear() == 0 &&
                 jobSeeker.getPassword().isBlank()){
 
             return new ErrorResult("All fields must be filled");

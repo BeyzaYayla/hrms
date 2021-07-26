@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface JobSeekerService {
 
-    DataResult<JobSeeker> getByNationalityId(String nationalityId);
+    DataResult<JobSeeker> getByNationalityId(long nationalityId);
     DataResult<List<JobSeeker>> getAll();
     Result add(JobSeeker jobSeeker);
 }

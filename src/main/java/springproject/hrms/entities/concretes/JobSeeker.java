@@ -21,17 +21,17 @@ public class JobSeeker extends User{
     @Column(name="last_name")
     private String lastName;
 
-    @Column(name="birth_date")
-    private Date birthDate;
+    @Column(name="birth_year")
+    private Integer birthYear;
 
     @Column(name="nationality_id")
-    private String nationalityId;
+    private long nationalityId;
 
-    public JobSeeker(String email, String password, String firstName, String lastName, Date birthDate, String nationalityId) {
+    public JobSeeker(String email, String password, String firstName, String lastName, Integer birthYear, long nationalityId) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDate = birthDate;
+        this.birthYear = birthYear;
         this.nationalityId = nationalityId;
     }
 }
