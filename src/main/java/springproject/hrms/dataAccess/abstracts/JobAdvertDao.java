@@ -17,7 +17,7 @@ public interface JobAdvertDao extends JpaRepository<JobAdvert, Integer> {
     List<JobAdvert> getByIsActiveTrueOrderByCreateDateAsc();
     List<JobAdvert> getByIsActiveTrueAndEmployer_Id(int employerId);
 
-    @Query("Select new springproject.hrms.entities.dtos.JobAdvertDto(e.companyName,jp.name,j.numberOfOpenPositions,j.createDate,j.deadline)"
+    @Query("Select new springproject.hrms.entities.dtos.JobAdvertDto(j.id,e.companyName,jp.name,j.numberOfOpenPositions,j.createDate,j.deadline)"
             + "From Employer e Inner Join e.jobAdverts j Inner Join j.jobPosition jp where j.isActive = true")
     List<JobAdvertDto> getActiveJobAdvertDetails();
 

@@ -78,7 +78,7 @@ public class AuthManager implements AuthService {
     }
 
     private Result emailExists(String email){
-        var user = this.userService.getByMail(email);
+        var user = this.userService.findByEmail(email);
 
         if (user.getData() != null){
             return new ErrorResult("User already exists");

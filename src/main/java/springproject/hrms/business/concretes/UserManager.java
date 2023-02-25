@@ -7,8 +7,8 @@ import springproject.hrms.core.utilities.results.DataResult;
 import springproject.hrms.core.utilities.results.Result;
 import springproject.hrms.core.utilities.results.SuccessDataResult;
 import springproject.hrms.core.utilities.results.SuccessResult;
-import springproject.hrms.dataAccess.abstracts.UserDao;
-import springproject.hrms.entities.concretes.User;
+import springproject.hrms.core.dataAccess.UserDao;
+import springproject.hrms.core.entities.User;
 
 @Service
 public class UserManager implements UserService {
@@ -27,7 +27,7 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public DataResult<User> getByMail(String email) {
-        return new SuccessDataResult<User>(this.userDao.findByEmail(email));
+    public DataResult<User> findByEmail(String email) {
+        return new SuccessDataResult<User>(this.userDao.findByEmail(email),"User found");
     }
 }

@@ -39,15 +39,15 @@ public class JobAdvert {
     @Column(name="is_active")
     private boolean isActive=true;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name="employer_id",referencedColumnName = "user_id")
     private Employer employer;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name="job_position_id",referencedColumnName = "id")
     private JobPosition jobPosition;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name="city_id",referencedColumnName = "id")
     private City city;
 }

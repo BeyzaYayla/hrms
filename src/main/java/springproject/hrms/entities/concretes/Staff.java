@@ -3,6 +3,7 @@ package springproject.hrms.entities.concretes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import springproject.hrms.core.entities.User;
 
 import javax.persistence.*;
 
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="staff")
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName="id")
-public class Staff extends User{
+public class Staff extends User {
 
     @Column(name="first_name")
     private String firstName;

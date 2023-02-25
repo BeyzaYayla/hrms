@@ -3,13 +3,13 @@ package springproject.hrms.business.concretes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springproject.hrms.business.abstracts.JobAdvertService;
-import springproject.hrms.core.utilities.results.DataResult;
-import springproject.hrms.core.utilities.results.Result;
-import springproject.hrms.core.utilities.results.SuccessDataResult;
-import springproject.hrms.core.utilities.results.SuccessResult;
+import springproject.hrms.core.utilities.business.BusinessRules;
+import springproject.hrms.core.utilities.results.*;
 import springproject.hrms.dataAccess.abstracts.JobAdvertDao;
 import springproject.hrms.entities.concretes.JobAdvert;
 import springproject.hrms.entities.dtos.JobAdvertDto;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -68,7 +68,21 @@ public class JobAdvertManager implements JobAdvertService {
 
     @Override
     public Result add(JobAdvert jobAdvert) {
+
+        Result result = BusinessRules.Run(checkDate(jobAdvert.getDeadline()));
+
+        if (result != null){
+            return result;
+        }
+
         this.jobAdvertDao.save(jobAdvert);
         return new SuccessResult("Job advert added");
+    }
+
+    private Result checkDate(LocalDate deadline){
+        if (deadline.isBefore(LocalDate.now())){
+            return new ErrorResult("Deadline must be today or after");
+        }
+        return new SuccessResult();
     }
 }

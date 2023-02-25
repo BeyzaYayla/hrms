@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import springproject.hrms.core.entities.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @Table(name="employers")
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName="id")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdverts"})
-public class Employer extends User{
+public class Employer extends User {
 
     @Column(name="company_name")
     private String companyName;

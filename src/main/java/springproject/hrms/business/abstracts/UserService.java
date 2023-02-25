@@ -2,12 +2,10 @@ package springproject.hrms.business.abstracts;
 
 import springproject.hrms.core.utilities.results.DataResult;
 import springproject.hrms.core.utilities.results.Result;
-import springproject.hrms.entities.concretes.User;
-
-import java.util.List;
+import springproject.hrms.core.entities.User;
 
 public interface UserService {
 
     Result add(User user);
-    DataResult<User> getByMail(String email);
+    DataResult<User> findByEmail(String email);
 }

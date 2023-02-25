@@ -7,29 +7,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="job_positions")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdverts","jobExperiences"})
-public class JobPosition {
+@Table(name="technologies")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","resumes"})
+public class Technology {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name="name")
+    @Column(name = "name")
+    @NotBlank
+    @NotNull
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobPosition")
-    private List<JobAdvert> jobAdverts;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "jobPosition")
-    private List<JobExperience> jobExperiences;
+    @ManyToMany(mappedBy = "technologies")
+    private List<Resume> resumes;
 }

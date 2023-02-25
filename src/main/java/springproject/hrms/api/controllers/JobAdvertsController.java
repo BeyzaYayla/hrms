@@ -23,32 +23,32 @@ public class JobAdvertsController {
         return this.jobAdvertService.getAll();
     }
 
-    @GetMapping("/getallactive")
+    @GetMapping("/getallActive")
     public DataResult<List<JobAdvert>> getAllActive(){
         return this.jobAdvertService.getAllActive();
     }
 
-    @GetMapping("/getallordered")
+    @GetMapping("/getallOrdered")
     public DataResult<List<JobAdvert>> getAllSortedByDateAsc(){
         return this.jobAdvertService.getAllSortedByDateAsc();
     }
 
-    @GetMapping("/getallordereddesc")
+    @GetMapping("/getallOrderedDesc")
     public DataResult<List<JobAdvert>> getAllSortedByDateDesc(){
         return this.jobAdvertService.getAllSortedByDateDesc();
     }
 
-    @GetMapping("/getallwithdetails")
+    @GetMapping("/getallActiveWithDetails")
     public DataResult<List<JobAdvertDto>> getAllActiveJobAdvertDetails(){
         return this.jobAdvertService.getAllActiveJobAdvertDetails();
     }
 
-    @GetMapping("/getbyid")
+    @GetMapping("/getById")
     public DataResult<JobAdvert> getById(@RequestParam int id){
         return this.jobAdvertService.getById(id);
     }
 
-    @GetMapping("/getbycompany")
+    @GetMapping("/getByCompany")
     public DataResult<List<JobAdvert>> getByCompany(@RequestParam int employerId){
         return this.jobAdvertService.getByCompany(employerId);
     }
